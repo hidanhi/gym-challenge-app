@@ -75,7 +75,7 @@ export default function PullScreen() {
               style={styles.statsButton}
               onPress={() =>
                 router.push({
-                  pathname: '/stats',
+                  pathname: '/PullStats',
                   params: {
                     person: 'danny',
                     idx: idx,
@@ -108,7 +108,7 @@ export default function PullScreen() {
               style={[styles.statsButton, { borderColor: '#36a2f5' }]}
               onPress={() =>
                 router.push({
-                  pathname: '/stats',
+                  pathname: '/PullStats',
                   params: {
                     person: 'nico',
                     idx: idx,

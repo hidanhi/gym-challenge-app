@@ -5,10 +5,10 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 // Grafik
 import { LineChart } from 'react-native-chart-kit';
 
-export default function StatsScreen() {
+export default function PushStatsScreen() {
   const { person, idx } = useLocalSearchParams();
   const router = useRouter();
-  const storageKey = `stats_${person}_${idx}`;
+  const storageKey = `push_stats_${person}_${idx}`;
   const [entries, setEntries] = useState([]);
   const [weight, setWeight] = useState('');
   const [reps, setReps] = useState('');
@@ -42,26 +42,24 @@ export default function StatsScreen() {
   };
 
   // --- GRAFIK Daten vorbereiten ---
-  // Wir zeigen den Verlauf der Gewichte über die Zeit!
-  const lastEntries = entries.slice(-7);
-const chartData = {
-  labels: lastEntries.map(e => `${e.reps} Wdh.`), // Zeigt Wiederholungen als Label
-  datasets: [
-    {
-      data: lastEntries.map(e => Number(e.weight) || 0),
-      color: (opacity = 1) => `rgba(30, 219, 84, ${opacity})`, // grün
-      strokeWidth: 2
-    }
-  ]
-};
-
+  const lastEntries = entries.slice(-7).reverse();
+  const chartData = {
+    labels: lastEntries.map(e => `${e.reps} Wdh.`), // Zeigt Wiederholungen als Label
+    datasets: [
+      {
+        data: lastEntries.map(e => Number(e.weight) || 0),
+        color: (opacity = 1) => `rgba(30, 219, 84, ${opacity})`, // grün
+        strokeWidth: 2
+      }
+    ]
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>
-        Statistik: {person === 'danny' ? 'Danny' : 'Nico'} – Übung {parseInt(idx, 10) + 1}
+        Statistik: {person === 'danny' ? 'Danny' : 'Nico'} – Push Übung {parseInt(idx, 10) + 1}
       </Text>
-      
+
       {/* GRAFIK */}
       {entries.length >= 2 && (
         <LineChart
@@ -84,7 +82,6 @@ const chartData = {
           }}
         />
       )}
-      {/* Nur Hinweis, falls zu wenig Daten */}
       {entries.length < 2 && (
         <Text style={{ color: '#aaa', marginBottom: 14 }}>Mindestens 2 Einträge nötig für die Grafik!</Text>
       )}
@@ -125,7 +122,6 @@ const chartData = {
           <Text style={styles.entryDate}>{e.date}</Text>
           <Text style={styles.entryWeight}>{e.weight} kg</Text>
           <Text style={styles.entryReps}>{e.reps} Wdh.</Text>
-          {/* Löschen-Button */}
           <TouchableOpacity onPress={() => handleDelete(i)}>
             <Text style={styles.deleteBtn}>✕</Text>
           </TouchableOpacity>

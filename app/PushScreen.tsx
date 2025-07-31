@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 
 const EXERCISE_COUNT = 10;
+const STORAGE_KEY = 'pushExercisesCompare';
 const DEFAULT_EXERCISES = Array(EXERCISE_COUNT).fill().map(() => ({
   name: '',
   dannyWeight: '',
@@ -18,13 +19,13 @@ export default function PushScreen() {
 
   useEffect(() => {
     (async () => {
-      const saved = await AsyncStorage.getItem('pushExercisesCompare');
+      const saved = await AsyncStorage.getItem(STORAGE_KEY);
       if (saved) setExercises(JSON.parse(saved));
     })();
   }, []);
 
   useEffect(() => {
-    AsyncStorage.setItem('pushExercisesCompare', JSON.stringify(exercises));
+    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(exercises));
   }, [exercises]);
 
   const handleChange = (idx, field, value) => {
@@ -74,7 +75,7 @@ export default function PushScreen() {
               style={styles.statsButton}
               onPress={() =>
                 router.push({
-                  pathname: '/stats',
+                  pathname: '/PushStats',
                   params: {
                     person: 'danny',
                     idx: idx,
@@ -107,7 +108,7 @@ export default function PushScreen() {
               style={[styles.statsButton, { borderColor: '#36a2f5' }]}
               onPress={() =>
                 router.push({
-                  pathname: '/stats',
+                  pathname: '/PushStats',
                   params: {
                     person: 'nico',
                     idx: idx,

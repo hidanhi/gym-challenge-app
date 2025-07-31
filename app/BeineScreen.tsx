@@ -4,8 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 
 const EXERCISE_COUNT = 10;
-// WICHTIG: Einzigartiger Key für Beine!
-const STORAGE_KEY = 'beineExercisesCompare';
+const STORAGE_KEY = 'beineExercisesCompare'; // <-- EINZIGARTIG FÜR BEINE!
 const DEFAULT_EXERCISES = Array(EXERCISE_COUNT).fill().map(() => ({
   name: '',
   dannyWeight: '',
@@ -76,7 +75,7 @@ export default function BeineScreen() {
               style={styles.statsButton}
               onPress={() =>
                 router.push({
-                  pathname: '/stats',
+                  pathname: '/BeineStats', // <-- ZU DEINER STATISTIKSEITE FÜR BEINE!
                   params: {
                     person: 'danny',
                     idx: idx,
@@ -109,7 +108,7 @@ export default function BeineScreen() {
               style={[styles.statsButton, { borderColor: '#36a2f5' }]}
               onPress={() =>
                 router.push({
-                  pathname: '/stats',
+                  pathname: '/BeineStats',
                   params: {
                     person: 'nico',
                     idx: idx,

@@ -22,17 +22,14 @@ export default function GymScreen() {
   }, []);
 
   // Daten speichern bei Änderung
-  useEffect(() => {
-    AsyncStorage.setItem('dannyCount', String(dannyCount));
-  }, [dannyCount]);
+    useEffect(() => {
+    (async () => {
+      await AsyncStorage.setItem('dannyCount', String(dannyCount));
+      await AsyncStorage.setItem('nicoCount', String(nicoCount));
+      await AsyncStorage.setItem('ziel', String(ziel));
+    })();
+  }, [dannyCount, nicoCount, ziel]);
 
-  useEffect(() => {
-    AsyncStorage.setItem('nicoCount', String(nicoCount));
-  }, [nicoCount]);
-
-  useEffect(() => {
-    AsyncStorage.setItem('ziel', String(ziel));
-  }, [ziel]);
 
   // Hilfsfunktion für sichere Eingabe
   const parseNumber = (text, fallback) => {
@@ -173,7 +170,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     borderWidth: 1,
     borderColor: '#333',
-    width: 110,
+    width: 160,
   },
   buttonRow: {
     flexDirection: 'row',

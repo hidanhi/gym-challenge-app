@@ -9,7 +9,7 @@ export default function HomeScreen() {
       <Text>Willkommen zur App</Text>
       <Button title="Play" onPress={() => router.push('/game')} />
       <View style={{ height: 20 }} />
-      <Button title="Gym Fitness Studio" onPress={() => router.push('/gym')} />
+      <Button title="Liegestütze" onPress={() => router.push('/gym')} />
     </View>
   );
 }

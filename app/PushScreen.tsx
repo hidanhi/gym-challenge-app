@@ -37,58 +37,87 @@ export default function PushScreen() {
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Push-Tag Vergleich</Text>
       <Text style={styles.desc}>Trage deine Übungen ein und vergleiche Danny & Nico!</Text>
+      {/* Kopfzeile */}
+      <View style={styles.headerRow}>
+        <View style={styles.headerCol}><Text style={styles.headerTitle}>Übung</Text></View>
+        <View style={styles.headerCol}><Text style={styles.headerTitle}>Gewicht (kg)</Text></View>
+        <View style={styles.headerCol}><Text style={styles.headerTitle}>Wdh.</Text></View>
+        <View style={styles.headerCol}></View>
+      </View>
       {exercises.map((ex, idx) => (
         <View key={idx} style={styles.exerciseBox}>
-          <Text style={styles.label}>Übung {idx + 1}</Text>
+          {/* Übungsname */}
           <TextInput
             style={styles.exerciseInput}
             placeholder="z.B. Bankdrücken"
             value={ex.name}
             onChangeText={t => handleChange(idx, 'name', t)}
           />
-          <View style={styles.rowHeader}>
-            <View style={styles.colHeader}><Text style={styles.personLabel}>Danny</Text></View>
-            <View style={styles.colHeader}><Text style={[styles.personLabel, {color:'#36a2f5'}]}>Nico</Text></View>
-          </View>
+          {/* Danny */}
           <View style={styles.row}>
-            {/* Danny */}
-            <View style={styles.col}>
-              <Text style={styles.fieldLabel}>Gewicht (kg)</Text>
-              <TextInput
-                style={styles.smallInput}
-                placeholder="z.B. 90"
-                keyboardType="numeric"
-                value={ex.dannyWeight}
-                onChangeText={t => handleChange(idx, 'dannyWeight', t)}
-              />
-              <Text style={styles.fieldLabel}>Wdh.</Text>
-              <TextInput
-                style={styles.smallInput}
-                placeholder="z.B. 12"
-                keyboardType="numeric"
-                value={ex.dannyReps}
-                onChangeText={t => handleChange(idx, 'dannyReps', t)}
-              />
-            </View>
-            {/* Nico */}
-            <View style={styles.col}>
-              <Text style={styles.fieldLabel}>Gewicht (kg)</Text>
-              <TextInput
-                style={[styles.smallInput, {borderColor:'#36a2f5'}]}
-                placeholder="z.B. 80"
-                keyboardType="numeric"
-                value={ex.nicoWeight}
-                onChangeText={t => handleChange(idx, 'nicoWeight', t)}
-              />
-              <Text style={styles.fieldLabel}>Wdh.</Text>
-              <TextInput
-                style={[styles.smallInput, {borderColor:'#36a2f5'}]}
-                placeholder="z.B. 14"
-                keyboardType="numeric"
-                value={ex.nicoReps}
-                onChangeText={t => handleChange(idx, 'nicoReps', t)}
-              />
-            </View>
+            <Text style={styles.personLabel}>Danny</Text>
+            <TextInput
+              style={styles.dataInput}
+              placeholder="Gewicht"
+              keyboardType="numeric"
+              value={ex.dannyWeight}
+              onChangeText={t => handleChange(idx, 'dannyWeight', t)}
+            />
+            <TextInput
+              style={styles.dataInput}
+              placeholder="Wdh."
+              keyboardType="numeric"
+              value={ex.dannyReps}
+              onChangeText={t => handleChange(idx, 'dannyReps', t)}
+            />
+            <TouchableOpacity
+              style={styles.statsButton}
+              onPress={() =>
+                router.push({
+                  pathname: '/stats',
+                  params: {
+                    person: 'danny',
+                    idx: idx,
+                    exerciseName: ex.name
+                  },
+                })
+              }
+            >
+              <Text style={styles.statsText}>Statistik</Text>
+            </TouchableOpacity>
+          </View>
+          {/* Nico */}
+          <View style={styles.row}>
+            <Text style={[styles.personLabel, { color: '#36a2f5' }]}>Nico</Text>
+            <TextInput
+              style={[styles.dataInput, { borderColor: '#36a2f5' }]}
+              placeholder="Gewicht"
+              keyboardType="numeric"
+              value={ex.nicoWeight}
+              onChangeText={t => handleChange(idx, 'nicoWeight', t)}
+            />
+            <TextInput
+              style={[styles.dataInput, { borderColor: '#36a2f5' }]}
+              placeholder="Wdh."
+              keyboardType="numeric"
+              value={ex.nicoReps}
+              onChangeText={t => handleChange(idx, 'nicoReps', t)}
+            />
+            <TouchableOpacity
+              style={[styles.statsButton, { borderColor: '#36a2f5' }]}
+              onPress={() =>
+                router.push({
+                  pathname: '/stats',
+                  params: {
+                    person: 'nico',
+                    idx: idx,
+                    exerciseName: ex.name
+                  },
+                })
+              }
+            >
+              <Text style={[styles.statsText, { color: '#36a2f5' }]}>Statistik</Text>
+            </TouchableOpacity>
           </View>
         </View>
       ))}
@@ -118,6 +147,22 @@ const styles = StyleSheet.create({
     marginBottom: 13,
     textAlign: 'center',
   },
+  headerRow: {
+    flexDirection: 'row',
+    marginBottom: 4,
+    width: '100%',
+    justifyContent: 'space-between',
+    paddingHorizontal: 4,
+  },
+  headerCol: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  headerTitle: {
+    color: '#bbb',
+    fontWeight: 'bold',
+    fontSize: 13,
+  },
   exerciseBox: {
     width: '100%',
     backgroundColor: '#232323',
@@ -130,13 +175,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
   },
-  label: {
-    color: '#1DB954',
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 4,
-    textAlign: 'left',
-  },
   exerciseInput: {
     backgroundColor: '#181818',
     color: '#fff',
@@ -148,54 +186,43 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     width: '100%',
   },
-  rowHeader: {
+  row: {
     flexDirection: 'row',
-    marginBottom: 3,
-  },
-  colHeader: {
-    flex: 1,
     alignItems: 'center',
+    marginBottom: 6,
+    gap: 8,
   },
   personLabel: {
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 15,
-    letterSpacing: 1,
-    marginBottom: 3,
+    width: 50,
   },
-  row: {
-    flexDirection: 'row',
-    marginBottom: 6,
-    gap: 8,
-  },
-  col: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#181818',
-    borderRadius: 7,
-    paddingVertical: 8,
-    marginHorizontal: 2,
-    borderWidth: 1,
-    borderColor: '#333',
-  },
-  fieldLabel: {
-    color: '#bbb',
-    fontSize: 13,
-    marginTop: 2,
-    marginBottom: 0,
-    textAlign: 'center',
-  },
-  smallInput: {
-    width: 60,
+  dataInput: {
     backgroundColor: '#111',
     color: '#fff',
     borderRadius: 6,
     padding: 7,
     fontSize: 15,
-    marginBottom: 6,
+    marginHorizontal: 2,
     borderWidth: 1,
     borderColor: '#1DB954',
     textAlign: 'center',
+    width: 70,
+  },
+  statsButton: {
+    marginLeft: 5,
+    backgroundColor: '#181818',
+    borderWidth: 1,
+    borderColor: '#1DB954',
+    borderRadius: 8,
+    paddingVertical: 5,
+    paddingHorizontal: 12,
+  },
+  statsText: {
+    color: '#1DB954',
+    fontWeight: 'bold',
+    fontSize: 13,
   },
   backButton: {
     marginTop: 20,

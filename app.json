@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "MyNewApp",
-    "slug": "MyNewApp",
+    "name": "FitnessBros",                // <--- Anzeigename auf dem Handy
+    "slug": "fitnessbros",                 // <--- Projektname (URL, darf keine Leerzeichen/Sonderzeichen haben)
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "mynewapp",
+    "scheme": "fitnessbros",               // <--- Wenn du Deeplinks brauchst (optional)
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -17,7 +17,7 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.hi_dan_hi.MyNewApp"
+      "package": "com.hi_dan_hi.fitnessbros" // <--- (nur anpassen, wenn du sie im Play Store neu einreichen willst)
     },
     "web": {
       "bundler": "metro",

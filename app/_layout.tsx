@@ -1,11 +1,6 @@
 import { Stack } from 'expo-router';
+import React from 'react';
 
 export default function Layout() {
-  return (
-    <Stack
-      screenOptions={{
-        headerShown: false, // Versteckt den weißen Header oben für alle Screens!
-      }}
-    />
-  );
+  return <Stack screenOptions={{ headerShown: false }} />;
 }

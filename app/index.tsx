@@ -1,3 +1,4 @@
+// Zeigt keinen Header in Expo Router
 export const options = { headerShown: false };
 
 import React from 'react';
@@ -9,23 +10,36 @@ export default function HomeScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>🏋️‍♂️ Fitness-App Start</Text>
-      <Text style={styles.subtitle}>Wähle einen Bereich:</Text>
+      <Text style={styles.title}>🎮 Spiele</Text>
+      <Text style={styles.subtitle}>
+        Wähle ein Spiel aus. Nach dem Start landest du im jeweiligen Hauptmenü/Levelscreen.
+      </Text>
 
       <View style={styles.menu}>
-        <MenuButton label="🎮 Play" onPress={() => router.push('/game')} />
-        <MenuButton label="🤼‍♀️ Challenges" onPress={() => router.push('/ChallengesScreen')} />
-        <MenuButton label="🔥 Push" onPress={() => router.push('/PushScreen')} />
-        <MenuButton label="🧲 Pull" onPress={() => router.push('/PullScreen')} />
-        <MenuButton label="🦵 Beine" onPress={() => router.push('/BeineScreen')} />
+        {/* Space Shooter (Top-Down) */}
+        <MenuButton
+          label="🚀 Space Spiel"
+          onPress={() => router.push('/game')} // <-- Space-Spiel Screen (deine Datei app/game.tsx)
+        />
+
+        {/* Nebula Conquest (Node-Capture / Burgen erobern) */}
+        <MenuButton
+          label="🟦 Nebula Conquest"
+          onPress={() => router.push('/NebulaMenu')} // <-- Hauptmenü/Levelscreen für Nebula
+        />
+
+        <MenuButton
+          label="🏠 KingDefense"
+          onPress={() => router.push('/KingDefense')} // <-- Space-Spiel Screen (deine Datei app/game.tsx)
+        />
       </View>
     </ScrollView>
   );
 }
 
-function MenuButton({ label, onPress }) {
+function MenuButton({ label, onPress }: { label: string; onPress: () => void }) {
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
+    <TouchableOpacity style={styles.button} onPress={onPress} activeOpacity={0.9}>
       <Text style={styles.buttonText}>{label}</Text>
     </TouchableOpacity>
   );
@@ -51,6 +65,7 @@ const styles = StyleSheet.create({
     color: '#bbb',
     marginBottom: 32,
     textAlign: 'center',
+    paddingHorizontal: 20,
   },
   menu: {
     width: '90%',
@@ -61,7 +76,6 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     paddingVertical: 18,
     paddingHorizontal: 36,
-    marginVertical: 4,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 2, height: 2 },

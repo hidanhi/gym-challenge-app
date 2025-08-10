@@ -1,2 +1,2 @@
-import GameScreen from '../components/GameScreen';
+import GameScreen from '../app/GameScreen';
 export default GameScreen;
